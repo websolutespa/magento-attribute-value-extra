@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+  ~  Copyright © Websolute spa. All rights reserved.
+  ~  See COPYING.txt for license details.
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/module-backend/etc/menu.xsd">
+    <menu>
+        <add id="Websolute_AttributeValueExtra::attribute_value_extra"
+             title="Attribute Value Extra"
+             translate="title"
+             module="Websolute_AttributeValueExtra"
+             sortOrder="99"
+             parent="Magento_Backend::stores_attributes"
+             action="websolute_attributevalueextra/attributevalueextra/index"
+             resource="Websolute_AttributeValueExtra::attributevalueextra_resource"
+        />
+    </menu>
+</config>
+

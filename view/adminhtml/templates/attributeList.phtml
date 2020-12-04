@@ -1,0 +1,100 @@
+<?php
+/*
+ *  Copyright © Websolute spa. All rights reserved.
+ *  See COPYING.txt for license details.
+ */
+
+/** @var ViewModel $viewModel */
+
+use Magento\Framework\View\Element\Template;
+use Websolute\AttributeValueExtra\ViewModel\AttributeValueExtraSelect as ViewModel;
+
+/** @var Template $block */
+$viewModel = $block->getViewModel();
+
+$attributeList = $viewModel->getListAttributeValueExtra();
+
+if ($viewModel->isEnabled()):?>
+    <div class="attribute-list-container">
+        <table class="attribute-list-table">
+            <tr class="attribute-list-table-row">
+                <th class="attribute-list-table-header">Store</th>
+                <th class="attribute-list-table-header">Entity Type</th>
+                <th class="attribute-list-table-header">Attribute</th>
+                <th class="attribute-list-table-header">Value</th>
+            </tr>
+            <?php
+            foreach ($attributeList as $row) {
+                if (isset($row['value_id'])) {
+                    echo '
+                    <tr class="attribute-list-table-row">
+                        <td class="attribute-list-table-content">
+                            <a href=' . $block->escapeUrl($viewModel->generateUrlBackend($row)) . '>' .
+                        $block->escapeHtml($row['store_code']) . '</a>
+                        </td>
+                        <td class="attribute-list-table-content">
+                            <a href=' . $block->escapeUrl($viewModel->generateUrlBackend($row)) . '>' .
+                        $block->escapeHtml($row['entity_type_code']) . '</a>
+                        </td>
+                        <td class="attribute-list-table-content">
+                            <a href=' . $block->escapeUrl($viewModel->generateUrlBackend($row)) . '>' .
+                            $block->escapeHtml($row['attribute_code']) . '</a>
+                        </td>
+                        <td class="attribute-list-table-content">
+                            <a href=' . $block->escapeUrl($viewModel->generateUrlBackend($row)) . '>' .
+                                $block->escapeHtml($row['value_label']) . '</a>
+                        </td>
+                    </tr>
+                    ';
+                } else {
+                    echo '
+                    <tr class="attribute-list-table-row">
+                        <td class="attribute-list-table-content">
+                            <a href=' . $block->escapeUrl($viewModel->generateUrlBackend($row)) . '>' .
+                        $block->escapeHtml($row['store_code']) . '</a>
+                        </td>
+                        <td class="attribute-list-table-content">
+                            <a href=' . $block->escapeUrl($viewModel->generateUrlBackend($row)) . '>' .
+                            $block->escapeHtml($row['entity_type_code']) . '</a>
+                        </td>
+                        <td class="attribute-list-table-content">
+                            <a href=' . $block->escapeUrl($viewModel->generateUrlBackend($row)) . '>' .
+                                $block->escapeHtml($row['attribute_code']) . '</a>
+                        </td>
+                        <td class="attribute-list-table-content">
+                            <a href=' . $block->escapeUrl($viewModel->generateUrlBackend($row)) . '></a>
+                        </td>
+                    </tr>
+                  ';
+                }
+            }
+            ?>
+        </table>
+    </div>
+    <style>
+        .attribute-list-table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        .attribute-list-table-content, .attribute-list-table-header {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        .attribute-list-table-row:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .attribute-list-table-header {
+            width: 2%
+        }
+
+        .attribute-list-table-content {
+            width: 30%
+        }
+    </style>
+<?php endif; ?>

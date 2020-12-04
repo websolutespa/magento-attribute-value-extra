@@ -1,0 +1,17 @@
+{
+    "name": "websolutespa/magento-attribute-value-extra",
+    "description": "Websolute Attribute Value Extra module",
+    "type": "magento2-module",
+    "require": {
+        "magento/framework": "*"
+    },
+    "license": "OSL-3.0",
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Websolute\\AttributeValueExtra\\": ""
+        }
+    }
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+  ~  Copyright © Websolute spa. All rights reserved.
+  ~  See COPYING.txt for license details.
+  -->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="websolute_attribute_value_extra" resource="default" engine="innodb"
+           comment="Websolute Attribute Value Extra">
+        <column xsi:type="int" name="row_id" unsigned="false" nullable="false" identity="true"
+                comment="Row ID"/>
+        <column xsi:type="int" name="entity_type_id" unsigned="false" nullable="false" identity="false"
+                comment="Entity ID"/>
+        <column xsi:type="smallint" name="attribute_id" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Attribute ID"/>
+        <column xsi:type="varchar" name="value_id" nullable="true" length="255"/>
+        <column xsi:type="varchar" name="option_id" nullable="true" length="255"/>
+        <column xsi:type="int" name="store_id" padding="11" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Store ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="row_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="WEBSOLUTE_ATTRIBUTE_VALUE_EXTRA_ATTR_ID_EAV_ATTR_ATTR_ID"
+                    table="websolute_attribute_value_extra" column="attribute_id" referenceTable="eav_attribute"
+                    referenceColumn="attribute_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="WEBSOLUTE_ATTRIBUTE_VALUE_EXTRA_ENTITY_TYPE_ID_ATTRIBUTE_ID_VALUE_ID_STORE_ID">
+            <column name="entity_type_id"/>
+            <column name="attribute_id"/>
+            <column name="value_id"/>
+            <column name="option_id"/>
+            <column name="store_id"/>
+        </constraint>
+    </table>
+</schema>
