@@ -25,9 +25,32 @@ if ($viewModel->isEnabled()):?>
                 const data = {
                     'entity_type_id': entityTypeId
                 }
-                debugger
                 const url = "<?php echo $block->getUrl('*/*/getattributebyentitytypeajax') ?>";
-                $.get( url, data, function (response) {
+                $.post( url, data, function (attributes) {
+                    attributes.forEach(function (a) {
+                        $('#attribute-id').append('' +
+                            '<option value="'+ a.attribute_id +'">' +
+                            a.attribute_code +
+                            '</option>'
+                        );
+                    })
+
+                }, "json" );
+            },
+            getAttributeValueList() {
+                const entityTypeId = $('#entity-type-id').val();
+                const attributeId = $('#attribute-id').val();
+                const websiteId = $('#website-id').val();
+                const storeGroupId = $('#store-group-id').val();
+                const storeId = $('#store-id').val();
+                const data = {
+                    'entity_type_id': entityTypeId,
+                    'website_id': websiteId,
+                    'store_group_id': storeGroupId,
+                    'store_id': storeId
+                }
+                const url = "<?php echo $block->getUrl('*/*/getattributevaluesajax') ?>";
+                $.post( url, data, function (response) {
                     console.log(response);
                 }, "json" );
             }
@@ -37,6 +60,10 @@ if ($viewModel->isEnabled()):?>
     <?php $entityTypeCodes = $viewModel->getEntityTypeCodes(); ?>
     <div class="attribute-list-container">
         <form>
+            <input type="hidden" id="website-id" value="<?= $viewModel->getSwitcherWebsite(); ?>"/>
+            <input type="hidden" id="store-group-id" value="<?= $viewModel->getSwitcherStoreGroup(); ?>"/>
+            <input type="hidden" id="store-id" value="<?= $viewModel->getSwitcherStore(); ?>"/>
+            <label for="entity-type-id">Entity Type:</label>
             <select id="entity-type-id" onchange="attributeValueExtra.getAttributeList()">
                 <option name=" " value=" " selected="selected"> </option>
                 <?php foreach ($entityTypeCodes as $entityTypeCode) :?>
@@ -44,6 +71,10 @@ if ($viewModel->isEnabled()):?>
                     <?= $entityTypeCode['name'] ?>
                 </option>
                 <?php endforeach; ?>
+            </select>
+            <label for="attribute-id">Attribute:</label>
+            <select id="attribute-id" onchange="attributeValueExtra.getAttributeValueList()">
+                <option name=" " value=" " selected="selected"> </option>
             </select>
         </form>
     </div>

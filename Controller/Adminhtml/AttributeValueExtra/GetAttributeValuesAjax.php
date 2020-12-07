@@ -18,7 +18,7 @@ use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\View\Result\Page;
 use Websolute\AttributeValueExtra\Model\GetAttributesListByEntityType;
 
-class GetAttributeByEntityTypeAjax extends Action
+class GetAttributeValuesAjax extends Action
 {
     const ADMIN_RESOURCE = 'Websolute_AttributeValueExtra::attributevalueextra_resource';
 

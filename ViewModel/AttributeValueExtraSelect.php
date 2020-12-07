@@ -32,20 +32,24 @@ class AttributeValueExtraSelect implements ArgumentInterface
      * @var Url
      */
     private $backendUrl;
+    private \Magento\Backend\Block\Store\Switcher $switcher;
 
     /**
      * @param Config $config
+     * @param \Magento\Backend\Block\Store\Switcher $switcher
      * @param GetListAttributeValueExtra $getListAttributeValueExtra
      * @param Url $backendUrl
      */
     public function __construct(
         Config $config,
+        \Magento\Backend\Block\Store\Switcher $switcher,
         GetListAttributeValueExtra $getListAttributeValueExtra,
         Url $backendUrl
     ) {
         $this->config = $config;
         $this->getListAttributeValueExtra = $getListAttributeValueExtra;
         $this->backendUrl = $backendUrl;
+        $this->switcher = $switcher;
     }
 
     /**
@@ -98,5 +102,29 @@ class AttributeValueExtraSelect implements ArgumentInterface
                 'value' => 4
             ]
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getSwitcherWebsite (): string
+    {
+        return (string)$this->switcher->getWebsiteId() ?: '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getSwitcherStoreGroup (): string
+    {
+        return (string)$this->switcher->getStoreGroupId() ?: '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getSwitcherStore (): string
+    {
+        return (string)$this->switcher->getStoreId() ?: '';
     }
 }
