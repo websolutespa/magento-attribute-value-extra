@@ -11,6 +11,7 @@ namespace Websolute\AttributeValueExtra\Model;
 use Magento\Catalog\Model\Product;
 use Magento\Eav\Model\Entity\Attribute;
 use Magento\Framework\DataObject;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\StoreManagerInterface;
 use Websolute\AttributeValueExtra\Model\ResourceModel\AttributeValueExtra\CollectionFactory;
@@ -49,7 +50,8 @@ class GetExtra
         StoreManagerInterface $storeManager,
         Attribute $attribute,
         CollectionFactory $collectionFactory
-    ) {
+    )
+    {
         $this->collectionFactory = $collectionFactory;
         $this->getEntityTypeIdByCode = $getEntityTypeIdByCode;
         $this->attribute = $attribute;
@@ -61,28 +63,28 @@ class GetExtra
      * @param string $valueId
      * @return DataObject
      * @throws NoSuchEntityException
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
-    public function getProductExtraByAttributeCodeValueId(string $attributeCode, string $valueId)
+    public function getProductExtraByAttributeCodeValueId(string $attributeCode, string $valueId): DataObject
     {
         $entityTypeId = $this->getEntityTypeIdByCode->execute(Product::ENTITY);
-        $attributeId = $this->attribute->getIdByCode(Product::ENTITY, $attributeCode);
+        $attributeId = (int)$this->attribute->getIdByCode(Product::ENTITY, $attributeCode);
 
         $item = $this->getByStore($entityTypeId, $attributeId, $valueId);
 
-        if ($item) {
+        if ($item->getId()) {
             return $item;
         }
 
         $item = $this->getByStoreGroup($entityTypeId, $attributeId, $valueId);
 
-        if ($item) {
+        if ($item->getId()) {
             return $item;
         }
 
         $item = $this->getByWebsite($entityTypeId, $attributeId, $valueId);
 
-        if ($item) {
+        if ($item->getId()) {
             return $item;
         }
 
@@ -92,99 +94,83 @@ class GetExtra
     }
 
     /**
-     * @param array $entityTypeId
+     * @param int $entityTypeId
      * @param int $attributeId
      * @param string $valueId
      * @return DataObject
      * @throws NoSuchEntityException
      */
-    private function getByStore (array $entityTypeId, int $attributeId, string $valueId): DataObject
+    private function getByStore(int $entityTypeId, int $attributeId, string $valueId): DataObject
     {
         $storeId = $this->storeManager->getStore()->getId();
 
-        $data = [
-            'entity_type_id' => $entityTypeId,
-            'attribute_id' => $attributeId,
-            'value_id' => $valueId,
-            'store_id' => $storeId
-        ];
-
         $collection = $this->collectionFactory->create();
-        $collection->addFieldToSelect('*')
-            ->addFieldToFilter($data);
+        $collection->addFieldToSelect('*');
+        $collection->addFieldToFilter('entity_type_id', $entityTypeId);
+        $collection->addFieldToFilter('attribute_id', $attributeId);
+        $collection->addFieldToFilter('value_id', $valueId);
+        $collection->addFieldToFilter('store_id', $storeId);
 
-        return $collection->getFirstItem()->getData();
+        return $collection->getFirstItem();
     }
 
     /**
-     * @param array $entityTypeId
+     * @param int $entityTypeId
      * @param int $attributeId
      * @param string $valueId
      * @return DataObject
      */
-    private function getByStoreGroup (array $entityTypeId, int $attributeId, string $valueId): DataObject
+    private function getByStoreGroup(int $entityTypeId, int $attributeId, string $valueId): DataObject
     {
         $storeGroupId = $this->storeManager->getGroup()->getId();
 
-        $data = [
-            'entity_type_id' => $entityTypeId,
-            'attribute_id' => $attributeId,
-            'value_id' => $valueId,
-            'store_group_id' => $storeGroupId
-        ];
-
         $collection = $this->collectionFactory->create();
-        $collection->addFieldToSelect('*')
-            ->addFieldToFilter($data);
+        $collection->addFieldToSelect('*');
+        $collection->addFieldToFilter('entity_type_id', $entityTypeId);
+        $collection->addFieldToFilter('attribute_id', $attributeId);
+        $collection->addFieldToFilter('value_id', $valueId);
+        $collection->addFieldToFilter('store_group_id', $storeGroupId);
 
         return $collection->getFirstItem();
     }
 
     /**
-     * @param array $entityTypeId
+     * @param int $entityTypeId
      * @param int $attributeId
      * @param string $valueId
      * @return DataObject
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
-    private function getByWebsite (array $entityTypeId, int $attributeId, string $valueId): DataObject
+    private function getByWebsite(int $entityTypeId, int $attributeId, string $valueId): DataObject
     {
         $websiteId = $this->storeManager->getWebsite()->getId();
 
-        $data = [
-            'entity_type_id' => $entityTypeId,
-            'attribute_id' => $attributeId,
-            'value_id' => $valueId,
-            'website_id' => $websiteId
-        ];
-
         $collection = $this->collectionFactory->create();
-        $collection->addFieldToSelect('*')
-            ->addFieldToFilter($data);
+        $collection->addFieldToSelect('*');
+        $collection->addFieldToFilter('entity_type_id', $entityTypeId);
+        $collection->addFieldToFilter('attribute_id', $attributeId);
+        $collection->addFieldToFilter('value_id', $valueId);
+        $collection->addFieldToFilter('website_id', $websiteId);
 
         return $collection->getFirstItem();
     }
 
     /**
-     * @param array $entityTypeId
+     * @param int $entityTypeId
      * @param int $attributeId
      * @param string $valueId
      * @return DataObject
      */
-    private function getByAllStoreView (array $entityTypeId, int $attributeId, string $valueId): DataObject
+    private function getByAllStoreView(int $entityTypeId, int $attributeId, string $valueId): DataObject
     {
-        $data = [
-            'entity_type_id' => $entityTypeId,
-            'attribute_id' => $attributeId,
-            'value_id' => $valueId,
-            'store_id' => '0',
-            'store_group_id' => '0',
-            'website_id' => '0'
-        ];
-
         $collection = $this->collectionFactory->create();
-        $collection->addFieldToSelect('*')
-            ->addFieldToFilter($data);
+        $collection->addFieldToSelect('*');
+        $collection->addFieldToFilter('entity_type_id', $entityTypeId);
+        $collection->addFieldToFilter('attribute_id', $attributeId);
+        $collection->addFieldToFilter('value_id', $valueId);
+        $collection->addFieldToFilter('store_id', '0');
+        $collection->addFieldToFilter('store_group_id', '0');
+        $collection->addFieldToFilter('website_id', '0');
 
         return $collection->getFirstItem();
     }

@@ -13,24 +13,17 @@ use Magento\Store\Model\StoreManagerInterface;
 class GetStoresFromSwitch
 {
     /**
-     * @var GetAttributeValueList
-     */
-    private $getAttributeValueList;
-
-    /**
      * @var StoreManagerInterface
      */
     private $storeManager;
 
     /**
-     * @param GetAttributeValueList $getAttributeValueList
      * @param StoreManagerInterface $storeManager
      */
-    public function __construct (
-        GetAttributeValueList $getAttributeValueList,
+    public function __construct(
         StoreManagerInterface $storeManager
-    ) {
-        $this->getAttributeValueList = $getAttributeValueList;
+    )
+    {
         $this->storeManager = $storeManager;
     }
 
@@ -38,9 +31,9 @@ class GetStoresFromSwitch
      * @param string $websiteId
      * @param string $storeGroupId
      * @param string $storeId
-     * @return array|string[]
+     * @return string[]
      */
-    public function getStoresFromSwitch (string $storeId, string $websiteId = '', string $storeGroupId = ''): array
+    public function execute(string $storeId, string $websiteId = '', string $storeGroupId = ''): array
     {
         if ($storeId) {
             return [$storeId];

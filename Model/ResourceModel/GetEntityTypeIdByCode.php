@@ -28,22 +28,18 @@ class GetEntityTypeIdByCode
 
     /**
      * @param string $entityCode
-     * @return array
+     * @return int
      */
-    public function execute(string $entityCode): array
+    public function execute(string $entityCode): int
     {
         $connection = $this->resourceConnection->getConnection();
 
         $tableName = $connection->getTableName('eav_entity_type');
 
         $qry = $connection->select()
-            ->from($tableName, ['entity_type_id', 'entity_type_code'])
+            ->from($tableName, ['entity_type_id'])
             ->where('entity_type_code=?', $entityCode);
 
-        return array_column(
-            $connection->fetchAll($qry),
-            'entity_type_code',
-            'entity_type_id'
-        );
+        return (int)$connection->fetchAll($qry)[0]['entity_type_id'];
     }
 }

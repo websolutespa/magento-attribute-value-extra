@@ -24,7 +24,7 @@
                    after="-">
                 <arguments>
                     <argument name="view_model" xsi:type="object">
-                        Websolute\AttributeValueExtra\ViewModel\AttributeValueExtraSelect
+                        Websolute\AttributeValueExtra\ViewModel\AttributeValueExtra
                     </argument>
                 </arguments>
             </block>

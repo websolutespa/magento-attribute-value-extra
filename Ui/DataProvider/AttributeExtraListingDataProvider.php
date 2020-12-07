@@ -343,8 +343,9 @@ class AttributeExtraListingDataProvider implements DataProviderInterface
         }
 
         $storeId = $item->getData('store_id');
-
-        if ($storeId !== null && $storeId !== '') {
+        if ($storeId === '0') {
+            $item->setData('store_name', '');
+        } elseif ($storeId !== null && $storeId !== '') {
             $storeName = $this->attributeValueExtraManager->getStoreNameById((string)$storeId);
             $item->setData('store_name', $storeName);
         }

@@ -49,7 +49,8 @@ class GetAttributeValueList
         Attribute $attribute,
         ObjectManagerInterface $objectManager,
         GetAttributeOptionIdsByAttributeId $getAttributeOptionIdsByAttributeId,
-        GetAttributeOptionValueByOptionId $getAttributeOptionValueByOptionId
+        GetAttributeOptionValueByOptionId $getAttributeOptionValueByOptionId,
+        GetStoresFromSwitch $getStoresFromSwitch
     )
     {
         $this->attributeFactory = $attributeFactory;
@@ -57,6 +58,7 @@ class GetAttributeValueList
         $this->objectManager = $objectManager;
         $this->getAttributeOptionIdsByAttributeId = $getAttributeOptionIdsByAttributeId;
         $this->getAttributeOptionValueByOptionId = $getAttributeOptionValueByOptionId;
+        $this->getStoresFromSwitch = $getStoresFromSwitch;
     }
 
     public function execute(string $attributeId, string $websiteId, string $storeGroupId, string $storeId): array
@@ -65,7 +67,7 @@ class GetAttributeValueList
         $this->attribute->load($attribute, $attributeId, 'attribute_id');
 
         $attribute = $attribute->getData();
-        $storeIds = $this->getStoresFromSwitch->getStoresFromSwitch($storeId, $websiteId, $storeGroupId);
+        $storeIds = $this->getStoresFromSwitch->execute($storeId, $websiteId, $storeGroupId);
 
         $values = [];
         if (
