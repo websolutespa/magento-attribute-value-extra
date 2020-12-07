@@ -56,7 +56,7 @@
                 </item>
             </argument>
         </field>
-        <field name="entity_type_code" formElement="input">
+        <field name="entity_type_id" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Entity Type</item>
@@ -68,7 +68,7 @@
                 <disabled>true</disabled>
             </settings>
         </field>
-        <field name="attribute_code" formElement="input">
+        <field name="attribute_id" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Attribute</item>
@@ -80,7 +80,7 @@
                 <disabled>true</disabled>
             </settings>
         </field>
-        <field name="value_label" formElement="input">
+        <field name="value_id" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Value</item>
@@ -92,7 +92,31 @@
                 <disabled>true</disabled>
             </settings>
         </field>
-        <field name="store_name" formElement="input">
+        <field name="website_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Store</item>
+                    <item name="source" xsi:type="string">store_name</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <disabled>true</disabled>
+            </settings>
+        </field>
+        <field name="store_group_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Store</item>
+                    <item name="source" xsi:type="string">store_name</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <disabled>true</disabled>
+            </settings>
+        </field>
+        <field name="store_id" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Store</item>
