@@ -12,10 +12,8 @@ use Magento\Catalog\Model\ResourceModel\Eav\AttributeFactory;
 use Magento\Eav\Model\Entity\Attribute\Source\Table;
 use Magento\Eav\Model\ResourceModel\Entity\Attribute;
 use Magento\Framework\ObjectManagerInterface;
-use Magento\Store\Model\StoreManagerInterface;
 use Websolute\AttributeValueExtra\Model\ResourceModel\GetAttributeOptionIdsByAttributeId;
 use Websolute\AttributeValueExtra\Model\ResourceModel\GetAttributeOptionValueByOptionId;
-use Websolute\AttributeValueExtra\Model\ResourceModel\GetAttributesByEntityType;
 
 class GetAttributeValueList
 {
@@ -42,17 +40,16 @@ class GetAttributeValueList
     private GetAttributeOptionValueByOptionId $getAttributeOptionValueByOptionId;
 
     /**
-     * @var StoreManagerInterface
+     * @var GetStoresFromSwitch
      */
-    private StoreManagerInterface $storeManager;
+    private GetStoresFromSwitch $getStoresFromSwitch;
 
     public function __construct(
         AttributeFactory $attributeFactory,
         Attribute $attribute,
         ObjectManagerInterface $objectManager,
         GetAttributeOptionIdsByAttributeId $getAttributeOptionIdsByAttributeId,
-        GetAttributeOptionValueByOptionId $getAttributeOptionValueByOptionId,
-        StoreManagerInterface $storeManager
+        GetAttributeOptionValueByOptionId $getAttributeOptionValueByOptionId
     )
     {
         $this->attributeFactory = $attributeFactory;
@@ -60,7 +57,6 @@ class GetAttributeValueList
         $this->objectManager = $objectManager;
         $this->getAttributeOptionIdsByAttributeId = $getAttributeOptionIdsByAttributeId;
         $this->getAttributeOptionValueByOptionId = $getAttributeOptionValueByOptionId;
-        $this->storeManager = $storeManager;
     }
 
     public function execute(string $attributeId, string $websiteId, string $storeGroupId, string $storeId): array
@@ -69,7 +65,7 @@ class GetAttributeValueList
         $this->attribute->load($attribute, $attributeId, 'attribute_id');
 
         $attribute = $attribute->getData();
-        $storeIds = $this->getStoresFromSwitch($websiteId, $storeGroupId, $storeId);
+        $storeIds = $this->getStoresFromSwitch->getStoresFromSwitch($storeId, $websiteId, $storeGroupId);
 
         $values = [];
         if (
@@ -103,35 +99,5 @@ class GetAttributeValueList
             }
         }
         return $values;
-    }
-
-    private function getStoresFromSwitch(string $websiteId, string $storeGroupId, string $storeId): array
-    {
-        if ($storeId) {
-            return [$storeId];
-        }
-
-        $stores = $this->storeManager->getStores(true);
-
-        $result = [];
-        foreach ($stores as $store) {
-            if ($storeGroupId) {
-                if ($store->getStoreGroupId() !== $storeGroupId) {
-                    continue;
-                }
-                $result[] = $store->getId();
-            } elseif ($websiteId) {
-                if ($store->getWebsiteId() !== $websiteId) {
-                    continue;
-                }
-                $result[] = $store->getId();
-            } else {
-                if ($store->getWebsiteId() !== '0') {
-                    continue;
-                }
-                $result[] = $store->getId();
-            }
-        }
-        return $result;
     }
 }

@@ -22,13 +22,6 @@
                 <item name="class" xsi:type="string">primary</item>
                 <item name="url" xsi:type="string">*/*/prepare</item>
             </item>
-<!--            this must be reviewed-->
-<!--            <item name="addText" xsi:type="array">-->
-<!--                <item name="name" xsi:type="string">add</item>-->
-<!--                <item name="label" xsi:type="string" translate="true">Add new text</item>-->
-<!--                <item name="class" xsi:type="string">primary</item>-->
-<!--                <item name="url" xsi:type="string">*/*/preparetext</item>-->
-<!--            </item>-->
         </item>
     </argument>
     <dataSource name="websolute_attribute_value_extra_data_source">
