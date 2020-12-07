@@ -1,0 +1,50 @@
+<?php
+/*
+ *  Copyright © Websolute spa. All rights reserved.
+ *  See COPYING.txt for license details.
+ */
+
+/** @var ViewModel $viewModel */
+
+use Magento\Framework\View\Element\Template;
+use Websolute\AttributeValueExtra\ViewModel\AttributeValueExtraSelect as ViewModel;
+
+/** @var Template $block */
+$viewModel = $block->getViewModel();
+
+if ($viewModel->isEnabled()):?>
+<script>
+    require([
+        'jquery',
+        'mage/url'
+    ], function ($, url) {
+        window.murl = url;
+        window.attributeValueExtra = {
+            getAttributeList() {
+                const entityTypeId = $('#entity-type-id').val();
+                const data = {
+                    'entity_type_id': entityTypeId
+                }
+                debugger
+                const url = "<?php echo $block->getUrl('*/*/getattributebyentitytypeajax') ?>";
+                $.get( url, data, function (response) {
+                    console.log(response);
+                }, "json" );
+            }
+        }
+    });
+</script>
+    <?php $entityTypeCodes = $viewModel->getEntityTypeCodes(); ?>
+    <div class="attribute-list-container">
+        <form>
+            <select id="entity-type-id" onchange="attributeValueExtra.getAttributeList()">
+                <option name=" " value=" " selected="selected"> </option>
+                <?php foreach ($entityTypeCodes as $entityTypeCode) :?>
+                <option name="<?= $entityTypeCode['name'] ?>" value="<?= $entityTypeCode['value'] ?>">
+                    <?= $entityTypeCode['name'] ?>
+                </option>
+                <?php endforeach; ?>
+            </select>
+        </form>
+    </div>
+<?php endif; ?>

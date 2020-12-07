@@ -89,4 +89,14 @@ class AttributeValueExtraSelect implements ArgumentInterface
     {
         return $this->backendUrl->getUrl('*/*/create', ['key' => $key]);
     }
+
+    public function getEntityTypeCodes (): array
+    {
+        return [
+            [
+                'name' => 'catalog_product',
+                'value' => 4
+            ]
+        ];
+    }
 }

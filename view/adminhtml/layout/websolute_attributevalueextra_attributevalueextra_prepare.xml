@@ -9,7 +9,7 @@
     <body>
         <referenceContainer name="content">
             <block name="attributevalueextra_list"
-                   template="Websolute_AttributeValueExtra::attributeList.phtml"
+                   template="Websolute_AttributeValueExtra::form.phtml"
                    as="attributevalueextra_list"
                    after="-">
                 <arguments>
