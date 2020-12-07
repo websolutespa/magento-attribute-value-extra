@@ -7,9 +7,9 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="websolute_attribute_value_extra" resource="default" engine="innodb"
            comment="Websolute Attribute Value Extra">
-        <column xsi:type="int" name="row_id" unsigned="false" nullable="false" identity="true"
+        <column xsi:type="int" name="row_id" nullable="false"
                 comment="Row ID"/>
-        <column xsi:type="int" name="entity_type_id" unsigned="false" nullable="false" identity="false"
+        <column xsi:type="int" name="entity_type_id" nullable="false"
                 comment="Entity ID"/>
         <column xsi:type="smallint" name="attribute_id" unsigned="true" nullable="false" identity="false"
                 default="0" comment="Attribute ID"/>
