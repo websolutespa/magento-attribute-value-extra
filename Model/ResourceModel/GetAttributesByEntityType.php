@@ -42,7 +42,7 @@ class GetAttributesByEntityType
                     'attribute_id',
                     'attribute_code'
                 ])
-            ->where('entity_type_id = ?', $entityTypeId);
+            ->where('frontend_input like "%select%" AND entity_type_id = ?', $entityTypeId);
 
         return $connection->fetchAll($qry);
     }

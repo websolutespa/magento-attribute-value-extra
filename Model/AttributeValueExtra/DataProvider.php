@@ -75,6 +75,7 @@ class DataProvider extends AbstractDataProvider
      */
     public function getData(): array
     {
+        // @todo if extra already exists, then load it. Trying to create a new extra, with existing match, will fail for contraint instead of load it end edit it
         if (isset($this->_loadedData)) {
             return $this->_loadedData;
         }

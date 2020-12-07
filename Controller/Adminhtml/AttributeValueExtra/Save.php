@@ -83,6 +83,9 @@ class Save extends Action
 
         if ($data) {
             try {
+                if ($data['row_id'] === '0') {
+                    $data['row_id'] = null;
+                }
                 $id = $data['row_id'];
                 $entity = $this->attributeValueExtraFactory->create();
                 $this->attributeValueExtra->load($entity, $id);

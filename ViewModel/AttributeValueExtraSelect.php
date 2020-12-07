@@ -8,10 +8,12 @@ declare(strict_types=1);
 
 namespace Websolute\AttributeValueExtra\ViewModel;
 
+use Magento\Backend\Block\Store\Switcher;
 use Magento\Backend\Model\Url;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Websolute\AttributeValueExtra\Model\Config;
+use Websolute\AttributeValueExtra\Model\GetLastInsertId;
 use Websolute\AttributeValueExtra\Model\GetListAttributeValueExtra;
 
 class AttributeValueExtraSelect implements ArgumentInterface
@@ -32,24 +34,28 @@ class AttributeValueExtraSelect implements ArgumentInterface
      * @var Url
      */
     private $backendUrl;
-    private \Magento\Backend\Block\Store\Switcher $switcher;
+    private Switcher $switcher;
+    private GetLastInsertId $getLastInsertId;
 
     /**
      * @param Config $config
-     * @param \Magento\Backend\Block\Store\Switcher $switcher
+     * @param Switcher $switcher
      * @param GetListAttributeValueExtra $getListAttributeValueExtra
      * @param Url $backendUrl
+     * @param GetLastInsertId $getLastInsertId
      */
     public function __construct(
         Config $config,
-        \Magento\Backend\Block\Store\Switcher $switcher,
+        Switcher $switcher,
         GetListAttributeValueExtra $getListAttributeValueExtra,
-        Url $backendUrl
+        Url $backendUrl,
+        GetLastInsertId $getLastInsertId
     ) {
         $this->config = $config;
         $this->getListAttributeValueExtra = $getListAttributeValueExtra;
         $this->backendUrl = $backendUrl;
         $this->switcher = $switcher;
+        $this->getLastInsertId = $getLastInsertId;
     }
 
     /**
@@ -94,7 +100,7 @@ class AttributeValueExtraSelect implements ArgumentInterface
         return $this->backendUrl->getUrl('*/*/create', ['key' => $key]);
     }
 
-    public function getEntityTypeCodes (): array
+    public function getEntityTypeCodes(): array
     {
         return [
             [
@@ -107,7 +113,7 @@ class AttributeValueExtraSelect implements ArgumentInterface
     /**
      * @return string
      */
-    public function getSwitcherWebsite (): string
+    public function getSwitcherWebsite(): string
     {
         return (string)$this->switcher->getWebsiteId() ?: '';
     }
@@ -115,7 +121,7 @@ class AttributeValueExtraSelect implements ArgumentInterface
     /**
      * @return string
      */
-    public function getSwitcherStoreGroup (): string
+    public function getSwitcherStoreGroup(): string
     {
         return (string)$this->switcher->getStoreGroupId() ?: '';
     }
@@ -123,7 +129,7 @@ class AttributeValueExtraSelect implements ArgumentInterface
     /**
      * @return string
      */
-    public function getSwitcherStore (): string
+    public function getSwitcherStore(): string
     {
         return (string)$this->switcher->getStoreId() ?: '';
     }

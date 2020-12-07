@@ -17,6 +17,7 @@ use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\View\Result\Page;
 use Websolute\AttributeValueExtra\Model\GetAttributesListByEntityType;
+use Websolute\AttributeValueExtra\Model\GetAttributeValueList;
 
 class GetAttributeValuesAjax extends Action
 {
@@ -33,6 +34,11 @@ class GetAttributeValuesAjax extends Action
     private GetAttributesListByEntityType $getAttributesListByEntityType;
 
     /**
+     * @var GetAttributeValueList
+     */
+    private GetAttributeValueList $getAttributeValueList;
+
+    /**
      * @param ResultFactory $resultFactory
      * @param RequestInterface $request
      * @param GetAttributesListByEntityType $getAttributesListByEntityType
@@ -42,11 +48,14 @@ class GetAttributeValuesAjax extends Action
         ResultFactory $resultFactory,
         RequestInterface $request,
         GetAttributesListByEntityType $getAttributesListByEntityType,
+        GetAttributeValueList $getAttributeValueList,
         Context $context
-    ) {
+    )
+    {
         parent::__construct($context);
         $this->resultFactory = $resultFactory;
         $this->request = $request;
+        $this->getAttributeValueList = $getAttributeValueList;
         $this->getAttributesListByEntityType = $getAttributesListByEntityType;
     }
 
@@ -55,13 +64,18 @@ class GetAttributeValuesAjax extends Action
      */
     public function execute()
     {
-        $entityTypeId = $this->request->getParam('entity_type_id');
+        $params = $this->request->getParams();
 
-        $attributes = $this->getAttributesListByEntityType->execute((int)$entityTypeId);
+        $attributeValueList = $this->getAttributeValueList->execute(
+            $params['attribute_id'],
+            $params['website_id'],
+            $params['store_group_id'],
+            $params['store_id']
+        );
 
         /** @var Json $resultJson */
         $resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);
-        $resultJson->setData($attributes);
+        $resultJson->setData($attributeValueList);
         return $resultJson;
     }
 }

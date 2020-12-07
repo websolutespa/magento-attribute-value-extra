@@ -13,69 +13,168 @@ use Websolute\AttributeValueExtra\ViewModel\AttributeValueExtraSelect as ViewMod
 $viewModel = $block->getViewModel();
 
 if ($viewModel->isEnabled()):?>
-<script>
-    require([
-        'jquery',
-        'mage/url'
-    ], function ($, url) {
-        window.murl = url;
-        window.attributeValueExtra = {
-            getAttributeList() {
-                const entityTypeId = $('#entity-type-id').val();
-                const data = {
-                    'entity_type_id': entityTypeId
-                }
-                const url = "<?php echo $block->getUrl('*/*/getattributebyentitytypeajax') ?>";
-                $.post( url, data, function (attributes) {
-                    attributes.forEach(function (a) {
-                        $('#attribute-id').append('' +
-                            '<option value="'+ a.attribute_id +'">' +
-                            a.attribute_code +
-                            '</option>'
-                        );
-                    })
+    <script>
+        require([
+            'jquery',
+            'mage/url'
+        ], function ($, url) {
+            window.murl = url;
 
-                }, "json" );
-            },
-            getAttributeValueList() {
-                const entityTypeId = $('#entity-type-id').val();
-                const attributeId = $('#attribute-id').val();
-                const websiteId = $('#website-id').val();
-                const storeGroupId = $('#store-group-id').val();
-                const storeId = $('#store-id').val();
-                const data = {
-                    'entity_type_id': entityTypeId,
-                    'website_id': websiteId,
-                    'store_group_id': storeGroupId,
-                    'store_id': storeId
+            let isSubmitted = false;
+
+            window.attributeValueExtra = {
+                getAttributeList() {
+                    const entityTypeId = $('#entity-type-id').val();
+                    $('#entity-type-id').attr('disabled', 'disabled');
+                    const data = {
+                        'entity_type_id': entityTypeId
+                    }
+                    if (!entityTypeId) {
+                        return;
+                    }
+                    const url = "<?php echo $block->getUrl('*/*/getattributebyentitytypeajax') ?>";
+                    $.post(url, data, function (attributes) {
+                        if (!attributes) {
+                            alert("Nessun attributo trovato");
+                            $('#entity-type-id').removeAttr('disabled');
+                            return;
+                        }
+
+                        attributes.forEach(function (a) {
+                            $('#attribute-id').append('' +
+                                '<option value="' + a.attribute_id + '">' +
+                                a.attribute_code +
+                                '</option>'
+                            );
+                        })
+                    }, "json");
+                },
+                getAttributeValueList() {
+                    const attributeId = $('#attribute-id').val();
+                    $('#attribute-id').attr('disabled', 'disabled');
+                    const websiteId = $('#website-id').val();
+                    const storeGroupId = $('#store-group-id').val();
+                    const storeId = $('#store-id').val();
+                    const data = {
+                        'attribute_id': attributeId,
+                        'website_id': websiteId,
+                        'store_group_id': storeGroupId,
+                        'store_id': storeId
+                    }
+                    if (!attributeId) {
+                        return;
+                    }
+                    const url = "<?php echo $block->getUrl('*/*/getattributevaluesajax') ?>";
+                    $.post(url, data, function (attributes) {
+                        if (!attributes) {
+                            alert("Nessun valore trovato");
+                            $('#attribute-id').removeAttr('disabled');
+                            return;
+                        }
+                        attributes.forEach(function (a) {
+                            $('#value-id').append('' +
+                                '<option value="' + a.value_id + '">' +
+                                a.label +
+                                '</option>'
+                            );
+                            $('#option-id').val(a.option_id);
+                        })
+                    }, "json");
+                },
+                submit() {
+                    if (!isSubmitted) {
+                        isSubmitted = true;
+                        $('#attribute-id').removeAttr('disabled');
+                        $('#entity-type-id').removeAttr('disabled');
+                        $('#attribute-extra-form').submit();
+                    }
                 }
-                const url = "<?php echo $block->getUrl('*/*/getattributevaluesajax') ?>";
-                $.post( url, data, function (response) {
-                    console.log(response);
-                }, "json" );
             }
-        }
-    });
-</script>
+        });
+    </script>
     <?php $entityTypeCodes = $viewModel->getEntityTypeCodes(); ?>
     <div class="attribute-list-container">
-        <form>
-            <input type="hidden" id="website-id" value="<?= $viewModel->getSwitcherWebsite(); ?>"/>
-            <input type="hidden" id="store-group-id" value="<?= $viewModel->getSwitcherStoreGroup(); ?>"/>
-            <input type="hidden" id="store-id" value="<?= $viewModel->getSwitcherStore(); ?>"/>
-            <label for="entity-type-id">Entity Type:</label>
-            <select id="entity-type-id" onchange="attributeValueExtra.getAttributeList()">
-                <option name=" " value=" " selected="selected"> </option>
-                <?php foreach ($entityTypeCodes as $entityTypeCode) :?>
-                <option name="<?= $entityTypeCode['name'] ?>" value="<?= $entityTypeCode['value'] ?>">
-                    <?= $entityTypeCode['name'] ?>
-                </option>
-                <?php endforeach; ?>
-            </select>
-            <label for="attribute-id">Attribute:</label>
-            <select id="attribute-id" onchange="attributeValueExtra.getAttributeValueList()">
-                <option name=" " value=" " selected="selected"> </option>
-            </select>
+        <form action="<?php echo $block->getUrl('*/*/create') ?>"
+              id="attribute-extra-form">
+
+
+            <fieldset class="fieldset admin__fieldset " id="base_fieldset">
+                <legend class="admin__legend legend">
+                    <span><?= __('Fill the form') ?></span>
+                </legend>
+                <br>
+
+                <div class="messages">
+                </div>
+
+
+                <div class="admin__field field field-entity  with-addon required _required">
+                    <label class="label admin__field-label" for="entity-type-id">
+                        <span><?= __('Entity Type') ?></span>
+                    </label>
+                    <div class="admin__field-control control">
+                        <div class="admin__field">
+                            <select id="entity-type-id"
+                                    name="entity_type_id"
+                                    title="<?= __('Entity Type') ?>"
+                                    class="required-entry _required select admin__control-select"
+                                    onchange="attributeValueExtra.getAttributeList()">
+                                <option name=" " value=" " selected="selected"> </option>
+                                <?php foreach ($entityTypeCodes as $entityTypeCode) : ?>
+                                    <option name="<?= $entityTypeCode['name'] ?>"
+                                            value="<?= $entityTypeCode['value'] ?>">
+                                        <?= $entityTypeCode['name'] ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin__field field field-entity  with-addon required _required">
+                    <label class="label admin__field-label" for="attribute-id">
+                        <span><?= __('Attribute') ?></span>
+                    </label>
+                    <div class="admin__field-control control">
+                        <div class="admin__field">
+                            <select id="attribute-id"
+                                    name="attribute_id"
+                                    title="<?= __('Attribute') ?>"
+                                    class="required-entry _required select admin__control-select"
+                                    onchange="attributeValueExtra.getAttributeValueList()">
+                                <option name=" " value=" " selected="selected"> </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin__field field field-entity  with-addon required _required">
+                    <label class="label admin__field-label" for="value-id">
+                        <span><?= __('Value') ?></span>
+                    </label>
+                    <div class="admin__field-control control">
+                        <div class="admin__field">
+                            <select id="value-id"
+                                    name="value_id"
+                                    title="<?= __('Value') ?>"
+                                    class="required-entry _required select admin__control-select"
+                                    onchange="attributeValueExtra.submit()">
+                                <option name=" " value=" " selected="selected"> </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" id="row-id" name="row_id" value="0"/>
+                <input type="hidden" id="website-id" name="website_id"
+                       value="<?= $viewModel->getSwitcherWebsite(); ?>"/>
+                <input type="hidden" id="store-group-id" name="store_group_id"
+                       value="<?= $viewModel->getSwitcherStoreGroup(); ?>"/>
+                <input type="hidden" id="store-id" name="store_id" value="<?= $viewModel->getSwitcherStore(); ?>"/>
+                <input type="hidden" id="option-id" name="option_id" value=""/>
+            </fieldset>
         </form>
+
+
     </div>
 <?php endif; ?>
