@@ -11,6 +11,7 @@ namespace Websolute\AttributeValueExtra\Model;
 use Magento\Catalog\Model\Category;
 use Magento\Catalog\Model\Product;
 use Magento\Customer\Model\Customer;
+use Magento\Eav\Model\Entity\Attribute\Source\Table;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Store\Model\StoreManagerInterface;
@@ -145,7 +146,10 @@ class GetListAttributeValueExtra
     protected function parseSelectAttribute($attribute, ?int $entityTypeId, $entityCode, array $result): array
     {
         $values = [];
-        if ($attribute['source_model']) {
+        if (
+            $attribute['source_model'] &&
+            $attribute['source_model'] !== Table::class
+        ) {
             $sourceModel = $this->objectManager->create($attribute['source_model']);
             $optionIds = $sourceModel->getAllOptions();
             foreach ($optionIds as $option) {
