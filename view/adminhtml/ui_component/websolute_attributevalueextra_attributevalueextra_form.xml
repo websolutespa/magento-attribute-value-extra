@@ -60,7 +60,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Entity Type</item>
-                    <item name="source" xsi:type="string">entity_type_code</item>
+                    <item name="source" xsi:type="string">entity_type_id</item>
                 </item>
             </argument>
             <settings>
@@ -72,7 +72,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Attribute</item>
-                    <item name="source" xsi:type="string">attribute_code</item>
+                    <item name="source" xsi:type="string">attribute_id</item>
                 </item>
             </argument>
             <settings>
@@ -84,7 +84,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Value</item>
-                    <item name="source" xsi:type="string">value_label</item>
+                    <item name="source" xsi:type="string">value_id</item>
                 </item>
             </argument>
             <settings>
@@ -95,8 +95,8 @@
         <field name="website_id" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="label" xsi:type="string" translate="true">Store</item>
-                    <item name="source" xsi:type="string">store_name</item>
+                    <item name="label" xsi:type="string" translate="true">Website</item>
+                    <item name="source" xsi:type="string">website_id</item>
                 </item>
             </argument>
             <settings>
@@ -107,8 +107,8 @@
         <field name="store_group_id" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="label" xsi:type="string" translate="true">Store</item>
-                    <item name="source" xsi:type="string">store_name</item>
+                    <item name="label" xsi:type="string" translate="true">Store Group</item>
+                    <item name="source" xsi:type="string">store_group_id</item>
                 </item>
             </argument>
             <settings>
@@ -120,7 +120,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Store</item>
-                    <item name="source" xsi:type="string">store_name</item>
+                    <item name="source" xsi:type="string">store_id</item>
                 </item>
             </argument>
             <settings>
