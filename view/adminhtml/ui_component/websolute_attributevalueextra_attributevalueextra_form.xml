@@ -80,11 +80,11 @@
                 <disabled>true</disabled>
             </settings>
         </field>
-        <field name="value_id" formElement="input">
+        <field name="option_id" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Value</item>
-                    <item name="source" xsi:type="string">value_id</item>
+                    <item name="source" xsi:type="string">option_id</item>
                 </item>
             </argument>
             <settings>

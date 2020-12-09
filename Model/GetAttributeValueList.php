@@ -17,32 +17,32 @@ use Websolute\AttributeValueExtra\Model\ResourceModel\GetAttributeOptionValueByO
 
 class GetAttributeValueList
 {
-    private AttributeFactory $attributeFactory;
+    private $attributeFactory;
 
     /**
      * @var Attribute
      */
-    private Attribute $attribute;
+    private $attribute;
 
     /**
      * @var ObjectManagerInterface
      */
-    private ObjectManagerInterface $objectManager;
+    private $objectManager;
 
     /**
      * @var GetAttributeOptionIdsByAttributeId
      */
-    private GetAttributeOptionIdsByAttributeId $getAttributeOptionIdsByAttributeId;
+    private $getAttributeOptionIdsByAttributeId;
 
     /**
      * @var GetAttributeOptionValueByOptionId
      */
-    private GetAttributeOptionValueByOptionId $getAttributeOptionValueByOptionId;
+    private $getAttributeOptionValueByOptionId;
 
     /**
      * @var GetStoresFromSwitch
      */
-    private GetStoresFromSwitch $getStoresFromSwitch;
+    private $getStoresFromSwitch;
 
     public function __construct(
         AttributeFactory $attributeFactory,

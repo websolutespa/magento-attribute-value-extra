@@ -26,17 +26,17 @@ class GetAttributeValuesAjax extends Action
     /**
      * @var RequestInterface
      */
-    private RequestInterface $request;
+    private $request;
 
     /**
      * @var GetAttributesListByEntityType
      */
-    private GetAttributesListByEntityType $getAttributesListByEntityType;
+    private $getAttributesListByEntityType;
 
     /**
      * @var GetAttributeValueList
      */
-    private GetAttributeValueList $getAttributeValueList;
+    private $getAttributeValueList;
 
     /**
      * @param ResultFactory $resultFactory

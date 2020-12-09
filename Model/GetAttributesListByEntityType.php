@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace Websolute\AttributeValueExtra\Model;
 
-
 use Websolute\AttributeValueExtra\Model\ResourceModel\GetAttributesByEntityType;
 
 class GetAttributesListByEntityType
@@ -16,7 +15,7 @@ class GetAttributesListByEntityType
     /**
      * @var GetAttributesByEntityType
      */
-    private GetAttributesByEntityType $getAttributesByEntityType;
+    private $getAttributesByEntityType;
 
     /**
      * @param GetAttributesByEntityType $getAttributesByEntityType
@@ -27,6 +26,10 @@ class GetAttributesListByEntityType
         $this->getAttributesByEntityType = $getAttributesByEntityType;
     }
 
+    /**
+     * @param int $entityTypeId
+     * @return array
+     */
     public function execute (int $entityTypeId): array
     {
         return $this->getAttributesByEntityType->execute($entityTypeId);

@@ -25,12 +25,12 @@ class GetAttributeByEntityTypeAjax extends Action
     /**
      * @var RequestInterface
      */
-    private RequestInterface $request;
+    private $request;
 
     /**
      * @var GetAttributesListByEntityType
      */
-    private GetAttributesListByEntityType $getAttributesListByEntityType;
+    private $getAttributesListByEntityType;
 
     /**
      * @param ResultFactory $resultFactory
@@ -39,15 +39,15 @@ class GetAttributeByEntityTypeAjax extends Action
      * @param Context $context
      */
     public function __construct(
+        Context $context,
         ResultFactory $resultFactory,
         RequestInterface $request,
-        GetAttributesListByEntityType $getAttributesListByEntityType,
-        Context $context
+        GetAttributesListByEntityType $getAttributesListByEntityType
     ) {
-        parent::__construct($context);
         $this->resultFactory = $resultFactory;
         $this->request = $request;
         $this->getAttributesListByEntityType = $getAttributesListByEntityType;
+        parent::__construct($context);
     }
 
     /**

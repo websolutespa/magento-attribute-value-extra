@@ -141,11 +141,9 @@ class DataProvider extends AbstractDataProvider
             $item->setData('store_name', $storeName);
         }
 
-        $valueId = $item->getData('value_id');
         $optionId = $item->getData('option_id');
 
-        if ($valueId !== null && $valueId !== '' &&
-            $optionId !== null && $optionId !== '' &&
+        if ($optionId !== null && $optionId !== '' &&
             $entityTypeCode !== null && $entityTypeCode !== '' &&
             $attributeCode !== null && $attributeCode !== ''
         ) {
@@ -191,11 +189,9 @@ class DataProvider extends AbstractDataProvider
             $item['store_name'] = $storeName;
         }
 
-        $valueId = $item['value_id'];
         $optionId = $item['option_id'];
 
-        if ($valueId !== null && $valueId !== '' &&
-            $optionId !== null && $optionId !== '' &&
+        if ($optionId !== null && $optionId !== '' &&
             $entityTypeCode !== null && $entityTypeCode !== '' &&
             $attributeCode !== null && $attributeCode !== ''
         ) {

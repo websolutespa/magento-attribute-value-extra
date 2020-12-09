@@ -31,8 +31,8 @@ class AttributeValueExtra implements ArgumentInterface
      * @var Url
      */
     private $backendUrl;
-    private Switcher $switcher;
-    private GetLastInsertId $getLastInsertId;
+    private $switcher;
+    private $getLastInsertId;
 
     /**
      * @param Config $config
@@ -60,11 +60,13 @@ class AttributeValueExtra implements ArgumentInterface
      */
     public function isEnabled(): bool
     {
+        //@todo
         return true;
     }
 
     public function getEntityTypeCodes(): array
     {
+        //@todo
         return [
             [
                 'name' => 'catalog_product',

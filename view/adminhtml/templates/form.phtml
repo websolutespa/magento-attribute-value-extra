@@ -72,12 +72,11 @@ if ($viewModel->isEnabled()):?>
                             return;
                         }
                         attributes.forEach(function (a) {
-                            $('#value-id').append('' +
-                                '<option value="' + a.value_id + '">' +
+                            $('#option-id').append('' +
+                                '<option value="' + a.option_id + '">' +
                                 a.label +
                                 '</option>'
                             );
-                            $('#option-id').val(a.option_id);
                         })
                     }, "json");
                 },
@@ -149,13 +148,13 @@ if ($viewModel->isEnabled()):?>
                 </div>
 
                 <div class="admin__field field field-entity  with-addon required _required">
-                    <label class="label admin__field-label" for="value-id">
+                    <label class="label admin__field-label" for="option-id">
                         <span><?= __('Value') ?></span>
                     </label>
                     <div class="admin__field-control control">
                         <div class="admin__field">
-                            <select id="value-id"
-                                    name="value_id"
+                            <select id="option-id"
+                                    name="option_id"
                                     title="<?= __('Value') ?>"
                                     class="required-entry _required select admin__control-select"
                                     onchange="attributeValueExtra.submit()">
@@ -171,7 +170,6 @@ if ($viewModel->isEnabled()):?>
                 <input type="hidden" id="store-group-id" name="store_group_id"
                        value="<?= $viewModel->getSwitcherStoreGroup(); ?>"/>
                 <input type="hidden" id="store-id" name="store_id" value="<?= $viewModel->getSwitcherStore(); ?>"/>
-                <input type="hidden" id="option-id" name="option_id" value=""/>
             </fieldset>
         </form>
 
