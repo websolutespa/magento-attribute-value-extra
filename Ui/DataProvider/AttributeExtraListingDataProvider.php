@@ -350,20 +350,35 @@ class AttributeExtraListingDataProvider implements DataProviderInterface
             $item->setData('store_name', $storeName);
         }
 
+        $storeGroupId = $item->getData('store_group_id');
+        if ($storeGroupId === '0') {
+            $item->setData('store_group_name', '');
+        } elseif ($storeGroupId !== null && $storeGroupId !== '') {
+            $storeGroupName = $this->attributeValueExtraManager->getStoreNameById((string)$storeGroupId);
+            $item->setData('store_group_name', $storeGroupName);
+        }
+
+        $websiteId = $item->getData('website_id');
+        if ($websiteId === '0') {
+            $item->setData('website_name', '');
+        } elseif ($websiteId !== null && $websiteId !== '') {
+            $websiteName = $this->attributeValueExtraManager->getStoreNameById((string)$websiteId);
+            $item->setData('website_name', $websiteName);
+        }
+
         $valueId = $item->getData('value_id');
         $optionId = $item->getData('option_id');
 
-        if ($valueId !== null && $valueId !== '' &&
-            $optionId !== null && $optionId !== '' &&
+        if ($optionId !== null && $optionId !== '' &&
             $entityTypeCode !== null && $entityTypeCode !== '' &&
             $attributeCode !== null && $attributeCode !== ''
         ) {
-            $valueLabel = $this->attributeValueExtraManager->getOptionValueCodeByoptionIdValueId(
+            $optionValue = $this->attributeValueExtraManager->getOptionValueCodeByoptionIdValueId(
                 (string)$entityTypeCode,
                 (string)$attributeCode,
                 (string)$optionId
             );
-            $item->setData('value_label', $valueLabel);
+            $item->setData('option_value', $optionValue);
         }
 
         return $item;

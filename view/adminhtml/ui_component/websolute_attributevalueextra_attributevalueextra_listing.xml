@@ -114,12 +114,30 @@
                 </item>
             </argument>
         </column>
-        <column name="value_label">
+        <column name="option_value">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filter" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string" translate="true">Value</item>
-                    <item name="source" xsi:type="string">value_label</item>
+                    <item name="label" xsi:type="string" translate="true">Option</item>
+                    <item name="source" xsi:type="string">option_value</item>
+                </item>
+            </argument>
+        </column>
+        <column name="website_name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Website</item>
+                    <item name="source" xsi:type="string">website_name</item>
+                </item>
+            </argument>
+        </column>
+        <column name="store_group_name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Store Group</item>
+                    <item name="source" xsi:type="string">store_group_name</item>
                 </item>
             </argument>
         </column>

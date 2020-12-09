@@ -67,7 +67,6 @@ class GetAttributeValueList
         $this->attribute->load($attribute, $attributeId, 'attribute_id');
 
         $attribute = $attribute->getData();
-        $storeIds = $this->getStoresFromSwitch->execute($storeId, $websiteId, $storeGroupId);
 
         $values = [];
         if (
@@ -90,7 +89,7 @@ class GetAttributeValueList
         } else {
             $optionIds = $this->getAttributeOptionIdsByAttributeId
                 ->execute($attribute['attribute_id']);
-            $options = $this->getAttributeOptionValueByOptionId->execute($optionIds, $storeIds);
+            $options = $this->getAttributeOptionValueByOptionId->execute($optionIds, [0]);
             foreach ($options as $option) {
                 $values[] = [
                     'value_id' => $option['value_id'],

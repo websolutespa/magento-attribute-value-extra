@@ -98,6 +98,7 @@ class AttributeValueExtraManager
         string $attributeCode,
         string $optionId
     ): string {
+        $this->storeManager->setCurrentStore('admin');
         $attribute = $this->eavConfig->getAttribute($entityType, $attributeCode);
         $options = $attribute->getSource()->getAllOptions();
         foreach ($options as $option) {
