@@ -1,7 +1,6 @@
 {
     "name": "websolutespa/magento-attribute-value-extra",
     "description": "Websolute Attribute Value Extra module",
-    "type": "magento2-module",
     "require": {
         "magento/framework": "*"
     },
